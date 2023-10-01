@@ -1,0 +1,10 @@
+Flask
+flask_graphql
+graphene
+graphene-federation
+chromadb==0.4.1
+tiktoken
+openai
+nltk
+PyPDF2
+sentence_transformers

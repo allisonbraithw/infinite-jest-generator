@@ -1,0 +1,9 @@
+type Character {
+  fullName: String!
+  alternativeNames: [String]
+  description: String
+}
+
+type Query {
+  character(fullName: String!): Character
+}
