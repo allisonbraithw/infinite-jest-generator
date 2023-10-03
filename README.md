@@ -40,15 +40,17 @@ OPENAI_ORG=<org id>
 OPENAI_API_KEY=<api key>
 ```
 
-3. Install the required dependencies:
+5. Install the required dependencies:
 ```
 pip install -r requirements.txt
 ```
 
-4. Run the application:
+6. Run the application:
 ```
 python app.py
 ```
+
+7. Navigate to `localhost:8000/graphql` to access the graphql playground (frontend incoming)
 
 ## Usage
 
