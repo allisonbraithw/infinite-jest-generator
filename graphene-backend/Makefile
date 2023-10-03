@@ -13,3 +13,6 @@ requirements.txt: venv requirements.in
 
 schema.graphql: venv app/schema/schema.py
 	venv/bin/python3.11 app/schema/schema.py > schema.graphql
+
+run: venv
+	venv/bin/python3.11 app/main.py

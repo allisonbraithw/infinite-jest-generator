@@ -1,6 +1,7 @@
 import os
 
 import chromadb
+from dotenv import load_dotenv
 from flask import Flask
 from flask_graphql import GraphQLView
 
@@ -9,6 +10,7 @@ from robot.text_processing import load_or_open_chunks_and_pages
 from robot.chroma import initialize_collection
 from dependency_factory import dependency_factory as df
 
+load_dotenv()
 
 class App:
     def __init__(self):

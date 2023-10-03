@@ -15,6 +15,7 @@ def initialize_vector_db(chunks: list):
 
 
 def initialize_collection(client, chunks: list, embeddings: list = None):
+    print("Initializing chromadb collection")
     id_list = [str(item) for item in range(0, len(chunks))]
     # todo(arb): this step takes a while, should just store it somewhere
     collection = client.create_collection(name="infinite_jest")
