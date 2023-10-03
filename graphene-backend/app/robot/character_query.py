@@ -12,6 +12,9 @@ import PyPDF2 as pdf
 from sentence_transformers import SentenceTransformer
 
 
+openai.organization = os.environ.get("OPENAI_ORG")
+openai.api_key = os.environ.get("OPENAI_API_KEY")
+
 def get_character_description_summary(docs: list, character: str = "Hal Incandenza"):
     # pass results to OpenAI & ask it to summarize
     system_prompt = f"You are a helpful AI assistant that takes chunks of text about a character \
@@ -27,7 +30,7 @@ def get_character_description_summary(docs: list, character: str = "Hal Incanden
     ]
 
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=messages,
         temperature=0.1,
     )

@@ -8,3 +8,4 @@ openai
 nltk
 PyPDF2
 sentence_transformers
+python-dotenv

@@ -173,7 +173,9 @@ python-dateutil==2.8.2
     #   pandas
     #   posthog
 python-dotenv==1.0.0
-    # via uvicorn
+    # via
+    #   -r requirements.in
+    #   uvicorn
 pytz==2023.3.post1
     # via pandas
 pyyaml==6.0.1
@@ -258,7 +260,7 @@ typing-extensions==4.8.0
     #   torch
 tzdata==2023.3
     # via pandas
-urllib3==2.0.5
+urllib3==2.0.6
     # via requests
 uvicorn[standard]==0.23.2
     # via chromadb
