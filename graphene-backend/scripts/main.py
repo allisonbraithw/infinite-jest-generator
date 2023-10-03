@@ -11,9 +11,6 @@ import nltk
 import PyPDF2 as pdf
 from sentence_transformers import SentenceTransformer
 
-openai.organization = "org-ZuOE6yBYZ9VQVlkltTqj4UzF"
-openai.api_key = "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"
-
 
 def split_text_with_overlap(text, num_sentences=3, overlap=1):
     nltk.download("punkt")

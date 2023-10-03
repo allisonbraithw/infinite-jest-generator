@@ -11,9 +11,6 @@ import nltk
 import PyPDF2 as pdf
 from sentence_transformers import SentenceTransformer
 
-openai.organization = "org-ZuOE6yBYZ9VQVlkltTqj4UzF"
-openai.api_key = "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"
-
 
 def get_character_description_summary(docs: list, character: str = "Hal Incandenza"):
     # pass results to OpenAI & ask it to summarize
