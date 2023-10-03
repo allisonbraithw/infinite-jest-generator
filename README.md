@@ -34,6 +34,12 @@ mkdir data
 cp <source directory>/bookname.pdv ./data
 ```
 
+4. Create a `.env` file with your openAI credentials
+```
+OPENAI_ORG=<org id>
+OPENAI_API_KEY=<api key>
+```
+
 3. Install the required dependencies:
 ```
 pip install -r requirements.txt
