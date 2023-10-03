@@ -4,6 +4,7 @@ import chromadb
 from dotenv import load_dotenv
 from flask import Flask
 from flask_graphql import GraphQLView
+from flask_cors import CORS
 
 from schema.schema import schema
 from robot.text_processing import load_or_open_chunks_and_pages
@@ -12,10 +13,12 @@ from dependency_factory import dependency_factory as df
 
 load_dotenv()
 
+
 class App:
     def __init__(self):
         # Set up flask app
         app = Flask(__name__)
+        CORS(app, origins=["http://localhost:5173"])
         app.debug = True
         app.add_url_rule(
             '/graphql',

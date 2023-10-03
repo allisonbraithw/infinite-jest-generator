@@ -2,10 +2,11 @@ Flask
 flask_graphql
 graphene
 graphene-federation
-chromadb==0.4.1
+chromadb==0.4.12
 tiktoken
 openai
 nltk
 PyPDF2
 sentence_transformers
 python-dotenv
+Flask-CORS

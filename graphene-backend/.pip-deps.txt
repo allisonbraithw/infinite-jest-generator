@@ -1,5 +1,6 @@
-chromadb==0.4.1
-├── chroma-hnswlib [required: ==0.7.1, installed: 0.7.1]
+chromadb==0.4.12
+├── bcrypt [required: >=4.0.1, installed: 4.0.1]
+├── chroma-hnswlib [required: ==0.7.3, installed: 0.7.3]
 │   └── numpy [required: Any, installed: 1.26.0]
 ├── fastapi [required: >=0.95.2,<0.100.0, installed: 0.99.1]
 │   ├── pydantic [required: >=1.7.4,<2.0.0,!=1.8.1,!=1.8, installed: 1.10.13]
@@ -10,7 +11,7 @@ chromadb==0.4.1
 │   │       └── sniffio [required: >=1.1, installed: 1.3.0]
 │   └── typing-extensions [required: >=4.5.0, installed: 4.8.0]
 ├── importlib-resources [required: Any, installed: 6.1.0]
-├── numpy [required: >=1.21.6, installed: 1.26.0]
+├── numpy [required: >=1.22.5, installed: 1.26.0]
 ├── onnxruntime [required: >=1.14.1, installed: 1.16.0]
 │   ├── coloredlogs [required: Any, installed: 15.0.1]
 │   │   └── humanfriendly [required: >=9.1, installed: 10.0]
@@ -21,12 +22,6 @@ chromadb==0.4.1
 │   └── sympy [required: Any, installed: 1.12]
 │       └── mpmath [required: >=0.19, installed: 1.3.0]
 ├── overrides [required: >=7.3.1, installed: 7.4.0]
-├── pandas [required: >=1.3, installed: 2.1.1]
-│   ├── numpy [required: >=1.23.2, installed: 1.26.0]
-│   ├── python-dateutil [required: >=2.8.2, installed: 2.8.2]
-│   │   └── six [required: >=1.5, installed: 1.16.0]
-│   ├── pytz [required: >=2020.1, installed: 2023.3.post1]
-│   └── tzdata [required: >=2022.1, installed: 2023.3]
 ├── posthog [required: >=2.4.0, installed: 3.0.2]
 │   ├── backoff [required: >=1.10.0, installed: 2.2.1]
 │   ├── monotonic [required: >=1.5, installed: 1.6]
@@ -50,10 +45,22 @@ chromadb==0.4.1
 │   └── urllib3 [required: >=1.21.1,<3, installed: 2.0.6]
 ├── tokenizers [required: >=0.13.2, installed: 0.13.3]
 ├── tqdm [required: >=4.65.0, installed: 4.66.1]
+├── typer [required: >=0.9.0, installed: 0.9.0]
+│   ├── click [required: >=7.1.1,<9.0.0, installed: 8.1.7]
+│   └── typing-extensions [required: >=3.7.4.3, installed: 4.8.0]
 ├── typing-extensions [required: >=4.5.0, installed: 4.8.0]
 └── uvicorn [required: >=0.18.3, installed: 0.23.2]
     ├── click [required: >=7.0, installed: 8.1.7]
     └── h11 [required: >=0.8, installed: 0.14.0]
+Flask-Cors==4.0.0
+└── flask [required: >=0.9, installed: 3.0.0]
+    ├── blinker [required: >=1.6.2, installed: 1.6.2]
+    ├── click [required: >=8.1.3, installed: 8.1.7]
+    ├── itsdangerous [required: >=2.1.2, installed: 2.1.2]
+    ├── Jinja2 [required: >=3.1.2, installed: 3.1.2]
+    │   └── MarkupSafe [required: >=2.0, installed: 2.1.3]
+    └── werkzeug [required: >=3.0.0, installed: 3.0.0]
+        └── MarkupSafe [required: >=2.1.1, installed: 2.1.3]
 Flask-GraphQL==2.0.1
 ├── flask [required: >=0.7.0, installed: 3.0.0]
 │   ├── blinker [required: >=1.6.2, installed: 1.6.2]
@@ -113,15 +120,21 @@ openai==0.28.1
 │   ├── idna [required: >=2.5,<4, installed: 3.4]
 │   └── urllib3 [required: >=1.21.1,<3, installed: 2.0.6]
 └── tqdm [required: Any, installed: 4.66.1]
-pip-tools==7.1.0
-├── build [required: Any, installed: 0.10.0]
+pandas==2.1.1
+├── numpy [required: >=1.23.2, installed: 1.26.0]
+├── python-dateutil [required: >=2.8.2, installed: 2.8.2]
+│   └── six [required: >=1.5, installed: 1.16.0]
+├── pytz [required: >=2020.1, installed: 2023.3.post1]
+└── tzdata [required: >=2022.1, installed: 2023.3]
+pip-tools==7.3.0
+├── build [required: Any, installed: 1.0.3]
 │   ├── packaging [required: >=19.0, installed: 23.2]
 │   └── pyproject-hooks [required: Any, installed: 1.0.0]
 ├── click [required: >=8, installed: 8.1.7]
 ├── pip [required: >=22.2, installed: 23.1.2]
 ├── setuptools [required: Any, installed: 65.5.0]
-└── wheel [required: Any, installed: 0.40.0]
-pipdeptree==2.10.2
+└── wheel [required: Any, installed: 0.41.2]
+pipdeptree==2.13.0
 pypdf2==3.0.1
 python-dotenv==1.0.0
 sentence-transformers==2.2.2
