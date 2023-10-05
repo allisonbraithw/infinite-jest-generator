@@ -15,8 +15,13 @@ load_dotenv()
 
 
 def initialize_vectordb():
-    _, pages = load_or_open_chunks_and_pages(root_dir="./data/")
-    initialize_collection(df.chroma_client, pages)
+    try:
+        _, pages = load_or_open_chunks_and_pages(root_dir="./data/")
+        initialize_collection(df.chroma_client, pages)
+    except Exception as e:
+        print(e)
+        return "Error", 500
+    return "OK", 200
 
 
 class App:
