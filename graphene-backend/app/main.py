@@ -14,6 +14,11 @@ from dependency_factory import dependency_factory as df
 load_dotenv()
 
 
+def initialize_vectordb():
+    _, pages = load_or_open_chunks_and_pages(root_dir="./data/")
+    initialize_collection(df.chroma_client, pages)
+
+
 class App:
     def __init__(self):
         # Set up flask app
@@ -28,18 +33,27 @@ class App:
                 graphiql=True
             )
         )
+        app.add_url_rule(
+            '/initialize_collection',
+            view_func=initialize_vectordb
+        )
         self.app = app
 
     def run(self, port):
-        self.app.run(port=port)
+        self.app.run(host='0.0.0.0', port=port)
 
 
 app = App()
 
 
+@app.app.route('/')
+def health_check():
+    return "OK", 200
+
+
 if __name__ == '__main__':
-    chunks, pages = load_or_open_chunks_and_pages(root_dir="../data/")
-    collection = initialize_collection(df.chroma_client, pages)
-    test = df.chroma_client.get_collection("infinite_jest")
-    print(test.count())
+    # chunks, pages = load_or_open_chunks_and_pages(root_dir="./data/")
+    # collection = initialize_collection(df.chroma_client, pages)
+    # test = df.chroma_client.get_collection("infinite_jest")
+    # print(test.count())
     app.run(os.environ.get('PORT', 8000))

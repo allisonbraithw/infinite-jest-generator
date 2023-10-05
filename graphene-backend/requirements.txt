@@ -91,6 +91,7 @@ httptools==0.6.0
 huggingface-hub==0.16.4
     # via
     #   sentence-transformers
+    #   tokenizers
     #   transformers
 humanfriendly==10.0
     # via coloredlogs
@@ -182,7 +183,7 @@ pyyaml==6.0.1
     #   huggingface-hub
     #   transformers
     #   uvicorn
-regex==2023.8.8
+regex==2023.10.3
     # via
     #   nltk
     #   tiktoken
@@ -230,7 +231,7 @@ threadpoolctl==3.2.0
     # via scikit-learn
 tiktoken==0.5.1
     # via -r requirements.in
-tokenizers==0.13.3
+tokenizers==0.14.0
     # via
     #   chromadb
     #   transformers
@@ -248,7 +249,7 @@ tqdm==4.66.1
     #   openai
     #   sentence-transformers
     #   transformers
-transformers==4.33.3
+transformers==4.34.0
     # via sentence-transformers
 typer==0.9.0
     # via chromadb

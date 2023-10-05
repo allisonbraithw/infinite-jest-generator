@@ -1,14 +1,8 @@
-from graphene import Field, ObjectType, String, ID, List
-from graphene_federation import build_schema, key
+from graphene import Field, ObjectType, String, List
+from graphene_federation import build_schema
 from robot.character_query import get_character_description_summary
 from robot.text_processing import limit_docs_by_tokens
 from dependency_factory import dependency_factory as df
-
-# from main import app
-# import flask
-
-# app = flask.current_app
-# from server.main import app
 
 
 class Character(ObjectType):

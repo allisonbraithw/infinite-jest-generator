@@ -1,4 +1,5 @@
 import chromadb
+import os
 
 
 class DependencyFactory:
@@ -9,7 +10,8 @@ class DependencyFactory:
     @property
     def chroma_client(self):
         if self._chroma_client is None:
-            self._chroma_client = chromadb.Client()
+            self._chroma_client = chromadb.HttpClient(host=os.environ.get(
+                "CHROMA_HOST"), port=os.environ.get("CHROMA_PORT"))
         return self._chroma_client
 
 
