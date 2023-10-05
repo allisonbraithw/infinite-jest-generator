@@ -1,16 +1,14 @@
-FROM python:3.11
+FROM python:3.11-slim
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/
 
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-
 COPY . .
 
-# Set the PYTHONPATH to ensure Python can find your module
-ENV PYTHONPATH /usr/src/app
 
-CMD ["flask", "--app", "app.main", "run", "--host", "0.0.0.0", "--port", "8000", "--debug"]
+CMD ["python", "app/main.py"]
+
 
 EXPOSE 8000
