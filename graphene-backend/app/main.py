@@ -38,7 +38,7 @@ app = App()
 
 
 if __name__ == '__main__':
-    chunks, pages = load_or_open_chunks_and_pages(root_dir="../data/")
+    chunks, pages = load_or_open_chunks_and_pages(root_dir="./data/")
     collection = initialize_collection(df.chroma_client, pages)
     test = df.chroma_client.get_collection("infinite_jest")
     print(test.count())
