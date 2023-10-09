@@ -4,8 +4,9 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { createClient } from "graphql-ws";
 
-const BASE_GRAPHQL_URL = "http://localhost:8000/graphql";
-const BASE_GRAPHQL_SUBSCRIPTIONS_URL = "ws://localhost:8080/graphql";
+const BASE_GRAPHQL_URL = import.meta.env.VITE_BASE_GRAPHQL_URL;
+const BASE_GRAPHQL_SUBSCRIPTIONS_URL = import.meta.env
+  .VITE_BASE_GRAPHQL_SUBSCRIPTIONS_URL;
 
 const httpLink = new HttpLink({
   uri: BASE_GRAPHQL_URL,
