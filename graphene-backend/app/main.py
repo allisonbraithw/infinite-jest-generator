@@ -23,7 +23,8 @@ class App:
     def __init__(self):
         # Set up flask app
         app = Flask(__name__)
-        CORS(app, origins=["http://localhost:5173"])
+        CORS(app, origins=["http://localhost:5173",
+             "https://ij-frontend-ka2xis5sma-uc.a.run.app"])
         app.debug = True
         app.add_url_rule(
             '/graphql',
