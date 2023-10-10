@@ -22,7 +22,7 @@ def get_character_description_summary(docs: list, character: str = "Hal Incanden
     system_prompt = f"You are a helpful AI assistant that takes chunks of text about a character \
         and produces a summary of that character's physical appearance. You should extract and \
         summarize physical descriptors only, ignore non-physical details about the character, and ignore \
-        descriptions of other characters not specified in the prompt.def\
+        descriptions of other characters not specified in the prompt.\
         ```{docs}```"
     messages = [
         {"role": "system", "content": f"{system_prompt}"},
@@ -32,6 +32,7 @@ def get_character_description_summary(docs: list, character: str = "Hal Incanden
         },
     ]
     logging.info("Sending prompt to OpenAI")
+    logging.info("Prompt: " + system_prompt)
     response = openai.ChatCompletion.create(
         model="gpt-4",
         messages=messages,

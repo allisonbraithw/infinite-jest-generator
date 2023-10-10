@@ -23,6 +23,7 @@ class Query(ObjectType):
         results = collection.query(
             query_texts=[f"the physical appearance of {fullName}"], n_results=15)
         result_docs = results["documents"][0]
+        logging.info(f"Got {len(result_docs)} results")
         token_limited_results = limit_docs_by_tokens(result_docs)
         logging.info(f"Getting description for {fullName}")
         desc = get_character_description_summary(
