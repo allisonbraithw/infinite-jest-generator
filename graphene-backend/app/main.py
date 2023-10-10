@@ -39,8 +39,9 @@ class App:
             '/initialize_collection',
             view_func=initialize_vectordb
         )
-        logging_client = google.cloud.logging.Client()
-        logging_client.setup_logging()
+        if os.environ.get("ENV") != "development":
+            logging_client = google.cloud.logging.Client()
+            logging_client.setup_logging()
         self.app = app
 
     def run(self, port):
