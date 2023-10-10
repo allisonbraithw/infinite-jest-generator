@@ -1,6 +1,7 @@
 import os
 import pickle
 import re
+import logging
 
 import nltk
 import chromadb
@@ -25,21 +26,21 @@ def split_text_with_overlap(text, num_sentences=3, overlap=1):
 def load_or_open_chunks_and_pages(book_name: str = "infinite-jest", root_dir: str = "../../data/"):
     # Open and load the PDF
     # Check if the txt file exists
-    print("Checking for text files")
+    logging.info("Checking for text files")
     pdf_name = f"{root_dir}{book_name}.pdf"
     # txt_name = f"{root_dir}{book_name}.txt"
     chunk_name = f"{root_dir}{book_name}-chunks.txt"
     page_name = f"{root_dir}{book_name}-pages.txt"
 
     if os.path.isfile(page_name) and os.path.isfile(chunk_name):
-        print("  Text found, loading chunks and pages now")
+        logging.info("  Text found, loading chunks and pages now")
         with open(chunk_name, "rb") as ijc:
             infiniteJestChunks = pickle.load(ijc)
 
         with open(page_name, "rb") as ijp:
             infiniteJestPages = pickle.load(ijp)
     else:
-        print(" Text not found, generating now")
+        logging.info(" Text not found, generating now")
         pdfFileObj = open(pdf_name, "rb")
 
         infiniteJestReader = pdf.PdfReader(pdfFileObj)
