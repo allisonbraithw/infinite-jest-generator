@@ -4,7 +4,7 @@
 #
 #    pip-compile requirements.in
 #
-aiohttp==3.8.5
+aiohttp==3.8.6
     # via openai
 aiosignal==1.3.1
     # via aiohttp
@@ -22,8 +22,10 @@ backoff==2.2.1
     # via posthog
 bcrypt==4.0.1
     # via chromadb
-blinker==1.6.2
+blinker==1.6.3
     # via flask
+cachetools==5.3.1
+    # via google-auth
 certifi==2023.7.22
     # via
     #   pulsar-client
@@ -67,7 +69,32 @@ frozenlist==1.4.0
     #   aiohttp
     #   aiosignal
 fsspec==2023.9.2
-    # via huggingface-hub
+    # via
+    #   huggingface-hub
+    #   torch
+google-api-core[grpc]==2.12.0
+    # via
+    #   google-cloud-appengine-logging
+    #   google-cloud-core
+    #   google-cloud-logging
+google-auth==2.23.3
+    # via
+    #   google-api-core
+    #   google-cloud-core
+google-cloud-appengine-logging==1.3.2
+    # via google-cloud-logging
+google-cloud-audit-log==0.2.5
+    # via google-cloud-logging
+google-cloud-core==2.3.3
+    # via google-cloud-logging
+google-cloud-logging==3.8.0
+    # via -r requirements.in
+googleapis-common-protos[grpc]==1.60.0
+    # via
+    #   google-api-core
+    #   google-cloud-audit-log
+    #   grpc-google-iam-v1
+    #   grpcio-status
 graphene==2.1.9
     # via
     #   -r requirements.in
@@ -84,11 +111,21 @@ graphql-relay==2.0.1
     # via graphene
 graphql-server-core==1.2.0
     # via flask-graphql
+grpc-google-iam-v1==0.12.6
+    # via google-cloud-logging
+grpcio==1.59.0
+    # via
+    #   google-api-core
+    #   googleapis-common-protos
+    #   grpc-google-iam-v1
+    #   grpcio-status
+grpcio-status==1.59.0
+    # via google-api-core
 h11==0.14.0
     # via uvicorn
 httptools==0.6.0
     # via uvicorn
-huggingface-hub==0.16.4
+huggingface-hub==0.17.3
     # via
     #   sentence-transformers
     #   tokenizers
@@ -160,10 +197,29 @@ promise==2.3
     #   graphql-core
     #   graphql-relay
     #   graphql-server-core
-protobuf==4.24.3
-    # via onnxruntime
+proto-plus==1.22.3
+    # via
+    #   google-cloud-appengine-logging
+    #   google-cloud-logging
+protobuf==4.24.4
+    # via
+    #   google-api-core
+    #   google-cloud-appengine-logging
+    #   google-cloud-audit-log
+    #   google-cloud-logging
+    #   googleapis-common-protos
+    #   grpc-google-iam-v1
+    #   grpcio-status
+    #   onnxruntime
+    #   proto-plus
 pulsar-client==3.3.0
     # via chromadb
+pyasn1==0.5.0
+    # via
+    #   pyasn1-modules
+    #   rsa
+pyasn1-modules==0.3.0
+    # via google-auth
 pydantic==1.10.13
     # via
     #   chromadb
@@ -191,15 +247,18 @@ regex==2023.10.3
 requests==2.31.0
     # via
     #   chromadb
+    #   google-api-core
     #   huggingface-hub
     #   openai
     #   posthog
     #   tiktoken
     #   torchvision
     #   transformers
+rsa==4.9
+    # via google-auth
 rx==1.6.3
     # via graphql-core
-safetensors==0.3.3
+safetensors==0.4.0
     # via transformers
 scikit-learn==1.3.1
     # via sentence-transformers
@@ -231,15 +290,15 @@ threadpoolctl==3.2.0
     # via scikit-learn
 tiktoken==0.5.1
     # via -r requirements.in
-tokenizers==0.14.0
+tokenizers==0.14.1
     # via
     #   chromadb
     #   transformers
-torch==2.0.1
+torch==2.1.0
     # via
     #   sentence-transformers
     #   torchvision
-torchvision==0.15.2
+torchvision==0.16.0
     # via sentence-transformers
 tqdm==4.66.1
     # via

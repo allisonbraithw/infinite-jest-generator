@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_graphql import GraphQLView
 from flask_cors import CORS
+import google.cloud.logging
 
 from schema.schema import schema
 from robot.text_processing import load_or_open_chunks_and_pages
@@ -38,6 +39,8 @@ class App:
             '/initialize_collection',
             view_func=initialize_vectordb
         )
+        logging_client = google.cloud.logging.Client()
+        logging_client.setup_logging()
         self.app = app
 
     def run(self, port):
