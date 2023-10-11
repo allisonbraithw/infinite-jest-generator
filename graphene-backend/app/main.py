@@ -1,4 +1,6 @@
 import os
+import logging
+import time
 
 import chromadb
 from dotenv import load_dotenv
@@ -61,8 +63,19 @@ def health_check():
 
 
 if __name__ == '__main__':
-    # chunks, pages = load_or_open_chunks_and_pages(root_dir="./data/")
-    # collection = initialize_collection(df.chroma_client, pages)
-    # test = df.chroma_client.get_collection("infinite_jest")
-    # print(test.count())
+    chunks, pages = load_or_open_chunks_and_pages(root_dir="./data/")
+    retries = 0
+    while retries < 5:
+        try:
+            collection = initialize_collection(df.chroma_client, pages)
+            break
+        except Exception:
+            retries += 1
+            time.sleep(5*retries)
+            logging.info("Retrying...")
+    if collection is None:
+        logging.info("Failed to initialize collection")
+        exit(1)
+    test = df.chroma_client.get_collection("infinite_jest")
+    logging.info(test.count())
     app.run(os.environ.get('PORT', 8000))
