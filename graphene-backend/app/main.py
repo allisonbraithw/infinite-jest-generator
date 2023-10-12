@@ -18,7 +18,10 @@ load_dotenv()
 
 
 def initialize_vectordb():
-    _, pages = load_or_open_chunks_and_pages(root_dir="./data/")
+    logging.info("Hello here i am")
+    chunks, pages = load_or_open_chunks_and_pages(root_dir="./data/")
+    logging.info(f"Got {len(chunks)} chunks")
+    logging.info(f"random chunk: {chunks[53]}")
     try:
         initialize_collection(df.chroma_client, pages)
     except Exception:
@@ -41,13 +44,13 @@ class App:
                 graphiql=True
             )
         )
-        app.add_url_rule(
-            '/initialize_collection',
-            view_func=initialize_vectordb
-        )
+        # Set up logging
         if os.environ.get("ENV") != "development":
             logging_client = google.cloud.logging.Client()
             logging_client.setup_logging()
+
+        # Initialize collection
+        initialize_vectordb()
         self.app = app
 
     def run(self, port):
@@ -63,19 +66,4 @@ def health_check():
 
 
 if __name__ == '__main__':
-    chunks, pages = load_or_open_chunks_and_pages(root_dir="./data/")
-    retries = 0
-    while retries < 5:
-        try:
-            collection = initialize_collection(df.chroma_client, pages)
-            break
-        except Exception:
-            retries += 1
-            time.sleep(5*retries)
-            logging.info("Retrying...")
-    if collection is None:
-        logging.info("Failed to initialize collection")
-        exit(1)
-    test = df.chroma_client.get_collection("infinite_jest")
-    logging.info(test.count())
     app.run(os.environ.get('PORT', 8000))
