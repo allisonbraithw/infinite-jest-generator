@@ -2,6 +2,7 @@ type Character {
   fullName: String!
   alternativeNames: [String]
   description: String
+  portraitLink: String
 }
 
 type Query {
