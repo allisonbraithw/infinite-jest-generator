@@ -11,6 +11,7 @@ class Character(ObjectType):
     fullName = String(required=True)
     alternativeNames = List(String)
     description = String()
+    portraitLink = String()
 
 
 class Query(ObjectType):
@@ -28,8 +29,8 @@ class Query(ObjectType):
         logging.info(f"Getting description for {fullName}")
         desc = get_character_description_summary(
             docs=token_limited_results, character=fullName)
-        # desc = "hi buddy"
         return Character(fullName=fullName, alternativeNames=["test"], description=desc)
+        # return Character(fullName=fullName, alternativeNames=["test2"], description="test")
 
 
 schema = build_schema(Query)

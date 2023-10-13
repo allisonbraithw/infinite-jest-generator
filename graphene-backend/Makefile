@@ -12,7 +12,7 @@ requirements.txt: venv requirements.in
 	venv/bin/pipdeptree > .pip-deps.txt
 
 schema.graphql: venv app/schema/schema.py
-	venv/bin/python3.11 app/schema/schema.py > schema.graphql
+	PYTHONPATH=/Users/allisonbraithwaite/Projects/infinite-jest-generator/graphene-backend/app venv/bin/python3.11 app/schema/schema.py > schema.graphql
 
 run: venv
 	venv/bin/python3.11 app/main.py
