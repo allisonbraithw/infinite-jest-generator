@@ -39,7 +39,9 @@ function App() {
       </Flex>
       {data && data.character &&
         <Flex p={4}>
-          <Image src={data?.character?.portraitLink} alt={data?.character?.fullName} />
+          <Container>
+            <Image src={data.character.portraitLink!} alt={data?.character?.fullName} />
+          </Container>
         </Flex>}
     </>
   )
