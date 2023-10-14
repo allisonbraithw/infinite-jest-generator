@@ -11,13 +11,14 @@ import google.cloud.logging
 
 from schema.schema import schema
 from vector_management.text_processing import load_or_open_chunks_and_pages
+from vector_management.weaviate import initialize_schema, configure_batches, ChunkType
 from vector_management.chroma import initialize_collection
 from dependency_factory import dependency_factory as df
 
 load_dotenv()
 
 
-def initialize_vectordb():
+def initialize_chroma_vectordb():
     logging.info("Hello here i am")
     chunks, pages = load_or_open_chunks_and_pages(root_dir="./data/")
     logging.info(f"Got {len(chunks)} chunks")
@@ -26,6 +27,16 @@ def initialize_vectordb():
         initialize_collection(df.chroma_client, pages)
     except Exception:
         return "Error initializing collection", 500
+    return "OK", 200
+
+
+def initialize_wv_vectordb():
+    chunks, pages = load_or_open_chunks_and_pages(root_dir="./data/")
+    try:
+        configure_batches(chunks, type=ChunkType.CHUNK)
+        configure_batches(pages, type=ChunkType.PAGE)
+    except Exception as e:
+        return f"Error configuring batches: {e}", 500
     return "OK", 200
 
 
@@ -50,7 +61,15 @@ class App:
             logging_client.setup_logging()
 
         # Initialize collection
-        initialize_vectordb()
+        match os.environ.get("VECTORDB"):
+            case "chroma":
+                initialize_chroma_vectordb()
+            case "weaviate":
+                initialize_schema()
+                app.add_url_rule(
+                    '/reinitialize_vectordb',
+                    view_func=initialize_wv_vectordb
+                )
         self.app = app
 
     def run(self, port):
