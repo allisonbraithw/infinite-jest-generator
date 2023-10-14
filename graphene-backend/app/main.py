@@ -10,8 +10,8 @@ from flask_cors import CORS
 import google.cloud.logging
 
 from schema.schema import schema
-from robot.text_processing import load_or_open_chunks_and_pages
-from robot.chroma import initialize_collection
+from vector_management.text_processing import load_or_open_chunks_and_pages
+from vector_management.chroma import initialize_collection
 from dependency_factory import dependency_factory as df
 
 load_dotenv()

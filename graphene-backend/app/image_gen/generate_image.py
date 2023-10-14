@@ -1,4 +1,9 @@
 import openai
+import os
+
+
+openai.organization = os.environ.get("OPENAI_ORG")
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 
 def generate_image(description: str):
