@@ -89,7 +89,7 @@ google-cloud-core==2.3.3
     # via google-cloud-logging
 google-cloud-logging==3.8.0
     # via -r requirements.in
-googleapis-common-protos[grpc]==1.60.0
+googleapis-common-protos[grpc]==1.61.0
     # via
     #   google-api-core
     #   google-cloud-audit-log
@@ -113,14 +113,18 @@ graphql-server-core==1.2.0
     # via flask-graphql
 grpc-google-iam-v1==0.12.6
     # via google-cloud-logging
-grpcio==1.59.0
+grpcio==1.53.0
     # via
     #   google-api-core
     #   googleapis-common-protos
     #   grpc-google-iam-v1
     #   grpcio-status
-grpcio-status==1.59.0
+    #   grpcio-tools
+    #   stability-sdk
+grpcio-status==1.53.0
     # via google-api-core
+grpcio-tools==1.53.0
+    # via stability-sdk
 h11==0.14.0
     # via uvicorn
 httptools==0.6.0
@@ -177,7 +181,7 @@ numpy==1.26.0
     #   sentence-transformers
     #   torchvision
     #   transformers
-onnxruntime==1.16.0
+onnxruntime==1.16.1
     # via chromadb
 openai==0.28.1
     # via -r requirements.in
@@ -188,8 +192,12 @@ packaging==23.2
     #   huggingface-hub
     #   onnxruntime
     #   transformers
+param==1.13.0
+    # via stability-sdk
 pillow==10.0.1
-    # via torchvision
+    # via
+    #   stability-sdk
+    #   torchvision
 posthog==3.0.2
     # via chromadb
 promise==2.3
@@ -201,7 +209,7 @@ proto-plus==1.22.3
     # via
     #   google-cloud-appengine-logging
     #   google-cloud-logging
-protobuf==4.24.4
+protobuf==4.21.12
     # via
     #   google-api-core
     #   google-cloud-appengine-logging
@@ -210,8 +218,10 @@ protobuf==4.24.4
     #   googleapis-common-protos
     #   grpc-google-iam-v1
     #   grpcio-status
+    #   grpcio-tools
     #   onnxruntime
     #   proto-plus
+    #   stability-sdk
 pulsar-client==3.3.0
     # via chromadb
 pyasn1==0.5.0
@@ -233,6 +243,7 @@ python-dateutil==2.8.2
 python-dotenv==1.0.0
     # via
     #   -r requirements.in
+    #   stability-sdk
     #   uvicorn
 pyyaml==6.0.1
     # via
@@ -280,6 +291,8 @@ six==1.16.0
     #   python-dateutil
 sniffio==1.3.0
     # via anyio
+stability-sdk==0.8.4
+    # via -r requirements.in
 starlette==0.27.0
     # via fastapi
 sympy==1.12
@@ -324,9 +337,9 @@ urllib3==2.0.6
     # via requests
 uvicorn[standard]==0.23.2
     # via chromadb
-uvloop==0.17.0
+uvloop==0.18.0
     # via uvicorn
-watchfiles==0.20.0
+watchfiles==0.21.0
     # via uvicorn
 websockets==11.0.3
     # via uvicorn
@@ -334,3 +347,6 @@ werkzeug==3.0.0
     # via flask
 yarl==1.9.2
     # via aiohttp
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
