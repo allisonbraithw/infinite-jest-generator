@@ -14,6 +14,24 @@ Technically it could work for any novel you have a PDF of, but I made this for a
 
 - Generate detailed images of main characters like Hal Incandenza, Don Gately, and Joelle Van Dyne.
 
+## Implementation Details
+
+### Retrieval
+
+Iterating through various vectordb solutions, so far:
+
+- chromadb, super great setup, working on stability with self-hosted in GCP
+- weaviate, managed is nice but default ada embeddings perform far worse than sentance transformer, working on updating that
+
+### Generation
+
+GPT-4
+
+### Image Gen
+
+- Dalle-2 built in openai api, kinda murdery
+- Stability API to stable diffusion, base model & no tuning so also kinda murdery
+
 ## Installation & Setup
 
 1. Clone the repository:
@@ -59,12 +77,12 @@ python app.py
 ## Usage
 
 1. Launch the application.
-2. Choose a character from the dropdown menu.
+2. Enter in a character name
 3. Click "Generate" and marvel at the AI-generated artwork!
 
 ## Demo
 
-For a live demo, visit [this link](your_demo_link_here).
+For a live demo, visit [this link](https://ij-frontend-ka2xis5sma-uc.a.run.app/).
 
 ## License
 
