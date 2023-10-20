@@ -61,7 +61,7 @@ class App:
             logging_client.setup_logging()
 
         # Initialize collection
-        match os.environ.get("VECTORDB"):
+        match os.environ.get("VECTORDB", "chroma"):
             case "chroma":
                 initialize_chroma_vectordb()
             case "weaviate":
