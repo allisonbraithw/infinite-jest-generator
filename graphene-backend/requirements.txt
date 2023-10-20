@@ -133,7 +133,7 @@ grpcio-tools==1.53.0
     # via stability-sdk
 h11==0.14.0
     # via uvicorn
-httptools==0.6.0
+httptools==0.6.1
     # via uvicorn
 huggingface-hub==0.17.3
     # via
@@ -171,7 +171,7 @@ multidict==6.0.4
     # via
     #   aiohttp
     #   yarl
-networkx==3.1
+networkx==3.2
     # via torch
 nltk==3.8.1
     # via
@@ -200,7 +200,7 @@ packaging==23.2
     #   transformers
 param==1.13.0
     # via stability-sdk
-pillow==10.0.1
+pillow==10.1.0
     # via
     #   stability-sdk
     #   torchvision
@@ -330,7 +330,7 @@ tqdm==4.66.1
     #   openai
     #   sentence-transformers
     #   transformers
-transformers==4.34.0
+transformers==4.34.1
     # via sentence-transformers
 typer==0.9.0
     # via chromadb
@@ -342,7 +342,7 @@ typing-extensions==4.8.0
     #   pydantic
     #   torch
     #   typer
-urllib3==2.0.6
+urllib3==2.0.7
     # via requests
 uvicorn[standard]==0.23.2
     # via chromadb

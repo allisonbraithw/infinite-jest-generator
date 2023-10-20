@@ -4,7 +4,7 @@ import json
 from typing import List as list
 from graphene import Field, ObjectType, String, List
 from graphene_federation import build_schema
-from robot.character_query import get_character_description_summary, generate_stability_image
+from robot.character_query import get_character_description_summary, generate_image
 from robot.text_processing import limit_docs_by_tokens
 from image_gen.generate_image import generate_image
 from inference.character_query import get_character_description_summary
