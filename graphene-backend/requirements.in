@@ -11,3 +11,4 @@ sentence_transformers
 python-dotenv
 Flask-CORS
 google-cloud-logging
+stability-sdk

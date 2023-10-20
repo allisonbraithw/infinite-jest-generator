@@ -2,7 +2,7 @@ import logging
 
 from graphene import Field, ObjectType, String, List
 from graphene_federation import build_schema
-from robot.character_query import get_character_description_summary, generate_image
+from robot.character_query import get_character_description_summary, generate_stability_image
 from robot.text_processing import limit_docs_by_tokens
 from dependency_factory import dependency_factory as df
 
@@ -29,7 +29,7 @@ class Query(ObjectType):
         logging.info(f"Getting description for {fullName}")
         desc = get_character_description_summary(
             docs=token_limited_results, character=fullName)
-        portrait_link = generate_image(desc)
+        portrait_link = generate_stability_image(desc)
         return Character(fullName=fullName, alternativeNames=["test"], description=desc, portraitLink=portrait_link)
         # return Character(fullName=fullName, alternativeNames=["test2"], description="test")
 
