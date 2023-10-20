@@ -1,8 +1,7 @@
 import os
 import logging
-import io
+import base64
 
-from PIL import Image
 from stability_sdk import client
 import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 import openai
@@ -63,6 +62,12 @@ def generate_stability_image(description: str):
                     "Your request activated the API's safety filters and could not be processed."
                     "Please modify the prompt and try again.")
             if artifact.type == generation.ARTIFACT_IMAGE:
-                img = Image.open(io.BytesIO(artifact.binary))
-                # Save our generated images with their seed number as the filename.
-                img.save(str(artifact.seed) + ".png")
+                base64_encoded = base64.b64encode(
+                    artifact.binary).decode('utf-8')
+                return f"data:image/png;base64,{base64_encoded}"
+
+
+# Scratch  Notes
+# img = Image.open(io.BytesIO(artifact.binary))
+# # Save our generated images with their seed number as the filename.
+# img.save(str(artifact.seed) + ".png")
