@@ -2,11 +2,17 @@ import os
 import pickle
 import re
 import logging
+from enum import Enum
 
 import nltk
-import chromadb
+from sentence_transformers import SentenceTransformer
 import tiktoken
 import PyPDF2 as pdf
+
+
+class ChunkType(Enum):
+    PAGE = "Page"
+    CHUNK = "Chunk"
 
 
 def split_text_with_overlap(text, num_sentences=3, overlap=1):
@@ -85,3 +91,22 @@ def limit_docs_by_tokens(documents: list, model: str = "gpt-3.5-turbo", token_li
         tokens_remaining -= number_of_tokens
 
     return token_limited_results
+
+
+def load_or_generate_embeddings(
+    infiniteJestChunks: list, book_name: str = "infinite-jest", chunk_type: ChunkType = ChunkType.CHUNK, root_dir: str = "../../data/"
+):
+    logging.info(f"Checking for {chunk_type.value} embeddings")
+    # todo(arb) this currently does not work, using default embeddings for now
+    embeddings_file_name = f"{root_dir}{book_name}-{chunk_type.value}-embeddings.txt"
+
+    if os.path.isfile(embeddings_file_name):
+        with open(embeddings_file_name, "rb") as ije:
+            embeddings = pickle.load(ije)
+    else:
+        logging.info(" Embeddings not found, generating now")
+        model = SentenceTransformer("all-MiniLM-L6-v2")
+        embeddings = model.encode(infiniteJestChunks)
+        with open(embeddings_file_name, "wb") as ije:
+            pickle.dump(embeddings, ije)
+    return embeddings

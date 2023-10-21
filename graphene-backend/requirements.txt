@@ -18,6 +18,8 @@ async-timeout==4.0.3
     # via aiohttp
 attrs==23.1.0
     # via aiohttp
+authlib==1.2.1
+    # via weaviate-client
 backoff==2.2.1
     # via posthog
 bcrypt==4.0.1
@@ -30,6 +32,8 @@ certifi==2023.7.22
     # via
     #   pulsar-client
     #   requests
+cffi==1.16.0
+    # via cryptography
 charset-normalizer==3.3.0
     # via
     #   aiohttp
@@ -46,6 +50,8 @@ click==8.1.7
     #   uvicorn
 coloredlogs==15.0.1
     # via onnxruntime
+cryptography==41.0.4
+    # via authlib
 fastapi==0.99.1
     # via chromadb
 filelock==3.12.4
@@ -127,7 +133,7 @@ grpcio-tools==1.53.0
     # via stability-sdk
 h11==0.14.0
     # via uvicorn
-httptools==0.6.0
+httptools==0.6.1
     # via uvicorn
 huggingface-hub==0.17.3
     # via
@@ -165,13 +171,13 @@ multidict==6.0.4
     # via
     #   aiohttp
     #   yarl
-networkx==3.1
+networkx==3.2
     # via torch
 nltk==3.8.1
     # via
     #   -r requirements.in
     #   sentence-transformers
-numpy==1.26.0
+numpy==1.26.1
     # via
     #   chroma-hnswlib
     #   chromadb
@@ -194,7 +200,7 @@ packaging==23.2
     #   transformers
 param==1.13.0
     # via stability-sdk
-pillow==10.0.1
+pillow==10.1.0
     # via
     #   stability-sdk
     #   torchvision
@@ -230,6 +236,8 @@ pyasn1==0.5.0
     #   rsa
 pyasn1-modules==0.3.0
     # via google-auth
+pycparser==2.21
+    # via cffi
 pydantic==1.10.13
     # via
     #   chromadb
@@ -265,6 +273,7 @@ requests==2.31.0
     #   tiktoken
     #   torchvision
     #   transformers
+    #   weaviate-client
 rsa==4.9
     # via google-auth
 rx==1.6.3
@@ -321,7 +330,7 @@ tqdm==4.66.1
     #   openai
     #   sentence-transformers
     #   transformers
-transformers==4.34.0
+transformers==4.34.1
     # via sentence-transformers
 typer==0.9.0
     # via chromadb
@@ -333,14 +342,18 @@ typing-extensions==4.8.0
     #   pydantic
     #   torch
     #   typer
-urllib3==2.0.6
+urllib3==2.0.7
     # via requests
 uvicorn[standard]==0.23.2
     # via chromadb
 uvloop==0.18.0
     # via uvicorn
+validators==0.22.0
+    # via weaviate-client
 watchfiles==0.21.0
     # via uvicorn
+weaviate-client==3.24.2
+    # via -r requirements.in
 websockets==11.0.3
     # via uvicorn
 werkzeug==3.0.0
