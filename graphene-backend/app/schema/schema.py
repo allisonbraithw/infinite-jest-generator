@@ -36,15 +36,14 @@ class Query(ObjectType):
             docs=token_limited_results, character=fullName)
 
         # Call to image generator
-        # portrait_link = generate_image(desc)
+        portrait_link = generate_image(desc)
         # desc = "test"
-        portrait_link = "test"
+        # portrait_link = "test"
         return Character(fullName=fullName, alternativeNames=["test"], description=desc, portraitLink=portrait_link)
 
 
 def query_texts_chroma(fullName: str) -> list[str]:
     collection = df.chroma_client.get_collection("infinite_jest")
-    print(collection.count())
     results = collection.query(
         query_texts=[f"the physical appearance of {fullName}"], n_results=15)
     result_docs = results["documents"][0]
@@ -57,7 +56,7 @@ def query_texts_weaviate(fullName: str) -> list[str]:
     nearVector = {"vector": embeddings.tolist(), "distance": 0.65}
     results = df.weaviate_client.query.get(ChunkType.PAGE.value, [
                                            "text"]).with_near_vector(nearVector).with_limit(20).do()
-    print(
+    logging.info(
         f'returned {len(results["data"]["Get"][ChunkType.PAGE.value])} results')
     result_docs = [r["text"]
                    for r in results["data"]["Get"][ChunkType.PAGE.value]]

@@ -1,17 +1,6 @@
-import pickle
-import os
-
-from dependency_factory import dependency_factory as df
-from enum import Enum
 from typing import List
-
-import PyPDF2 as pdf
-from sentence_transformers import SentenceTransformer
-
-
-class ChunkType(Enum):
-    PAGE = "Page"
-    CHUNK = "Chunk"
+from vector_management.text_processing import load_or_generate_embeddings, ChunkType
+from dependency_factory import dependency_factory as df
 
 
 schema = {
@@ -52,22 +41,3 @@ def configure_batches(data: List, chunk_type: ChunkType, purge: bool = True, roo
                 class_name=chunk_type.value,
                 vector=embeddings[i].tolist()
             )
-
-
-def load_or_generate_embeddings(
-    infiniteJestChunks: list, book_name: str = "infinite-jest", chunk_type: ChunkType = ChunkType.CHUNK, root_dir: str = "../../data/"
-):
-    print(f"Checking for {chunk_type.value} embeddings")
-    # todo(arb) this currently does not work, using default embeddings for now
-    embeddings_file_name = f"{root_dir}{book_name}-{chunk_type.value}-embeddings.txt"
-
-    if os.path.isfile(embeddings_file_name):
-        with open(embeddings_file_name, "rb") as ije:
-            embeddings = pickle.load(ije)
-    else:
-        print(" Embeddings not found, generating now")
-        model = SentenceTransformer("all-MiniLM-L6-v2")
-        embeddings = model.encode(infiniteJestChunks)
-        with open(embeddings_file_name, "wb") as ije:
-            pickle.dump(embeddings, ije)
-    return embeddings
