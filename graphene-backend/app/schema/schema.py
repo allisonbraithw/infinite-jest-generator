@@ -9,6 +9,7 @@ from inference.character_query import get_character_description_summary
 from vector_management.text_processing import limit_docs_by_tokens
 from vector_management.weaviate import ChunkType
 from dependency_factory import dependency_factory as df
+from sentence_transformers import SentenceTransformer
 
 
 class Character(ObjectType):
@@ -35,7 +36,9 @@ class Query(ObjectType):
             docs=token_limited_results, character=fullName)
 
         # Call to image generator
-        portrait_link = generate_image(desc)
+        # portrait_link = generate_image(desc)
+        # desc = "test"
+        portrait_link = "test"
         return Character(fullName=fullName, alternativeNames=["test"], description=desc, portraitLink=portrait_link)
 
 
@@ -49,12 +52,16 @@ def query_texts_chroma(fullName: str) -> list[str]:
 
 
 def query_texts_weaviate(fullName: str) -> list[str]:
-    results = df.weaviate_client.query.get(ChunkType.PAGE.value, ["text"]).with_near_text(
-        {"concepts": [f"the pyhsical appearance of {fullName}"], "distance": 0.2}).with_limit(20).do()
-    print(json.dumps(results, indent=2))
-    # result_docs = [r["text"]
-    #                for r in results["data"]["Get"][ChunkType.PAGE.value]]
-    return []  # result_docs
+    model = SentenceTransformer("all-MiniLM-L6-v2")
+    embeddings = model.encode(f"the pyhsical appearance of {fullName}")
+    nearVector = {"vector": embeddings.tolist(), "distance": 0.65}
+    results = df.weaviate_client.query.get(ChunkType.PAGE.value, [
+                                           "text"]).with_near_vector(nearVector).with_limit(20).do()
+    print(
+        f'returned {len(results["data"]["Get"][ChunkType.PAGE.value])} results')
+    result_docs = [r["text"]
+                   for r in results["data"]["Get"][ChunkType.PAGE.value]]
+    return result_docs
 
 
 schema = build_schema(Query)
