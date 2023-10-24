@@ -47,7 +47,7 @@ class App:
         # Set up flask app
         app = Flask(__name__)
         CORS(app, origins=["http://localhost:5173",
-             "https://ij-frontend-ka2xis5sma-uc.a.run.app"])
+             "https://ij-frontend-ka2xis5sma-uc.a.run.app", "https://infinite-jest.arb.haus"])
         app.debug = True
         app.add_url_rule(
             '/graphql',
