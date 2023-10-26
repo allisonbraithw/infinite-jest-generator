@@ -4,7 +4,7 @@ import { graphql } from "../src/gql";
 import { Input, Button, Flex, Spacer, Container, Image } from "@chakra-ui/react";
 
 import "./App.css";
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useSubscription } from "@apollo/client";
 
 // Sample Query-- the codegen does not create code that compiles if there are
 // no queries registered via the 'graphql' function
@@ -18,9 +18,20 @@ const getCharacterQueryDocument = graphql(`
   }
 `);
 
+const getTimeQueryDocument = graphql(`
+subscription getTime {
+  timeOfDay
+}`);
+
 function App() {
   const [character, setCharacter] = useState("")
   const [loadCharacter, { called, loading, data }] = useLazyQuery(getCharacterQueryDocument)
+  const [time, setTime] = useState("")
+  const { loading: timeLoading } = useSubscription(getTimeQueryDocument, {
+    onData: (data) => {
+      console.log(data.data)
+    }
+  })
 
   const handleButtonClick = () => {
     loadCharacter({ variables: { fullName: character } });
@@ -32,6 +43,10 @@ function App() {
         <Input placeholder="Hal Incandenza" value={character} onChange={(e) => setCharacter(e.target.value)} />
         <Spacer p={4} />
         <Button onClick={handleButtonClick}>Submit</Button>
+      </Flex>
+      <Flex p={4}>
+        {timeLoading && <Container borderRadius="xl" border="2px solid">Loading...</Container>}
+        {time && <Container borderRadius="xl" border="2px solid">{time}</Container>}
       </Flex>
       <Flex p={4}>
         {called && loading && <Container borderRadius="xl" border="2px solid">Loading...</Container>}

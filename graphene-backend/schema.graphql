@@ -1,3 +1,8 @@
+schema {
+  query: Query
+  subscription: Subscription
+}
+
 type Character {
   fullName: String!
   alternativeNames: [String]
@@ -8,3 +13,8 @@ type Character {
 type Query {
   character(fullName: String!): Character
 }
+
+type Subscription {
+  timeOfDay: String
+}
+
