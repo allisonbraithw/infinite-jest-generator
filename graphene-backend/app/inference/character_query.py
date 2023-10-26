@@ -1,9 +1,5 @@
 import os
 import logging
-import base64
-
-from stability_sdk import client
-import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 
 import openai
 
