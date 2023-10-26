@@ -1,8 +1,9 @@
 import logging
-import json
+import asyncio
 
+from datetime import datetime
 from typing import List as list
-from graphene import Field, ObjectType, String, List
+from graphene import Field, ObjectType, String, List, Schema
 from graphene_federation import build_schema
 from image_gen.generate_image import generate_image
 from inference.character_query import get_character_description_summary
@@ -42,6 +43,15 @@ class Query(ObjectType):
         return Character(fullName=fullName, alternativeNames=["test"], description=desc, portraitLink=portrait_link)
 
 
+class Subscription(ObjectType):
+    time_of_day = String()
+
+    async def subscribe_time_of_day(root, info):
+        while True:
+            yield datetime.now().isoformat()
+            await asyncio.sleep(1)
+
+
 def query_texts_chroma(fullName: str) -> list[str]:
     collection = df.chroma_client.get_collection("infinite_jest")
     results = collection.query(
@@ -63,9 +73,16 @@ def query_texts_weaviate(fullName: str) -> list[str]:
     return result_docs
 
 
-schema = build_schema(Query)
+# schema = build_schema(Query)
+schema = Schema(query=Query, subscription=Subscription)
 
+# if __name__ == "__main__":
+#     from graphql import graphql
+#     result = graphql(schema, '{ _service { sdl } }')
+#     print(result.data["_service"]["sdl"].strip())
+
+# Print the entire schema to a file
 if __name__ == "__main__":
-    from graphql import graphql
-    result = graphql(schema, '{ _service { sdl } }')
-    print(result.data["_service"]["sdl"].strip())
+    print(str(schema))
+    # with open("schema.graphql", "w") as f:
+    #     f.write(str(schema))

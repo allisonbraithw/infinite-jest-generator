@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query GetCharacter($fullName: String!) {\n    character(fullName: $fullName) {\n      fullName\n      description\n      portraitLink\n    }\n  }\n": types.GetCharacterDocument,
+    "\nsubscription getTime {\n  timeOfDay\n}": types.GetTimeDocument,
 };
 
 /**
@@ -34,6 +35,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query GetCharacter($fullName: String!) {\n    character(fullName: $fullName) {\n      fullName\n      description\n      portraitLink\n    }\n  }\n"): (typeof documents)["\n  query GetCharacter($fullName: String!) {\n    character(fullName: $fullName) {\n      fullName\n      description\n      portraitLink\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\nsubscription getTime {\n  timeOfDay\n}"): (typeof documents)["\nsubscription getTime {\n  timeOfDay\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
