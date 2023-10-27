@@ -1,8 +1,6 @@
 import os
 import logging
-import time
 
-import chromadb
 from dotenv import load_dotenv
 from flask import Flask
 from flask_graphql import GraphQLView

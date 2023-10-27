@@ -1,5 +1,4 @@
 import logging
-import json
 
 from typing import List as list
 from graphene import Field, ObjectType, String, List
