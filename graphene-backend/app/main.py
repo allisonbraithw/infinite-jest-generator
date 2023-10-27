@@ -1,11 +1,12 @@
 import os
 import logging
-import time
 
-import chromadb
 from dotenv import load_dotenv
 from flask import Flask
 from flask_graphql import GraphQLView
+from flask_sockets import Sockets
+from graphql_ws.gevent import GeventSubscriptionServer
+from graphql.backend import GraphQLCoreBackend
 from flask_cors import CORS
 import google.cloud.logging
 
@@ -42,49 +43,55 @@ def initialize_wv_vectordb():
     return "OK", 200
 
 
-class App:
-    def __init__(self):
-        # Set up flask app
-        app = Flask(__name__)
-        CORS(app, origins=["http://localhost:5173",
-             "https://ij-frontend-ka2xis5sma-uc.a.run.app", "https://infinite-jest.arb.haus"])
-        app.debug = True
+class CustomBackend(GraphQLCoreBackend):
+    def __init__(self, executor=None):
+        super().__init__(executor)
+        self.execute_params["allow_subscriptions"] = True
+
+
+# Set up flask app
+app = Flask(__name__)
+CORS(app, origins=["http://localhost:5173",
+                   "https://ij-frontend-ka2xis5sma-uc.a.run.app", "https://infinite-jest.arb.haus"])
+app.debug = True
+app.add_url_rule(
+    '/graphql',
+    view_func=GraphQLView.as_view(
+        'graphql',
+        schema=schema,
+        graphiql=True
+    )
+)
+# Set up logging
+if os.environ.get("ENV") != "development":
+    logging_client = google.cloud.logging.Client()
+    logging_client.setup_logging()
+
+# Initialize collection
+match os.environ.get("VECTORDB", "chroma"):
+    case "chroma":
+        initialize_chroma_vectordb()
+    case "weaviate":
+        initialize_schema()
         app.add_url_rule(
-            '/graphql',
-            view_func=GraphQLView.as_view(
-                'graphql',
-                schema=schema,
-                graphiql=True
-            )
+            '/reinitialize_vectordb',
+            view_func=initialize_wv_vectordb
         )
-        # Set up logging
-        if os.environ.get("ENV") != "development":
-            logging_client = google.cloud.logging.Client()
-            logging_client.setup_logging()
 
-        # Initialize collection
-        match os.environ.get("VECTORDB", "chroma"):
-            case "chroma":
-                initialize_chroma_vectordb()
-            case "weaviate":
-                initialize_schema()
-                app.add_url_rule(
-                    '/reinitialize_vectordb',
-                    view_func=initialize_wv_vectordb
-                )
-        self.app = app
-
-    def run(self, port):
-        self.app.run(host='0.0.0.0', port=port)
+# Setup Sockets
+sockets = Sockets(app)
+subscription_server = GeventSubscriptionServer(schema)
+app.app_protocol = lambda environ_path_info: 'graphql-ws'
 
 
-app = App()
-
-
-@app.app.route('/')
+@app.route('/')
 def health_check():
     return "OK", 200
 
 
 if __name__ == '__main__':
-    app.run(os.environ.get('PORT', 8000))
+    from gevent import pywsgi
+    from geventwebsocket.handler import WebSocketHandler
+    print(os.environ.get("OPENAI_ORG"))
+    server = pywsgi.WSGIServer(('', 8000), app, handler_class=WebSocketHandler)
+    server.serve_forever()

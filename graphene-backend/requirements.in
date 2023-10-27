@@ -1,5 +1,8 @@
 Flask
 flask_graphql
+flask-sockets
+gevent
+graphql-ws
 graphene
 graphene-federation
 chromadb==0.4.12
