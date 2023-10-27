@@ -7,6 +7,7 @@ from image_gen.generate_image import generate_image
 from inference.character_query import get_character_description_summary
 from vector_management.text_processing import limit_docs_by_tokens
 from vector_management.weaviate import ChunkType
+from vector_management.evaluation import evaluate_relevancy
 from dependency_factory import dependency_factory as df
 from sentence_transformers import SentenceTransformer
 
@@ -34,10 +35,14 @@ class Query(ObjectType):
         desc = get_character_description_summary(
             docs=token_limited_results, character=fullName)
 
+        # Evaluate relevancy
+        evaluate_relevancy(
+            query=f"the pyhsical appearance of {fullName}", docs=token_limited_results, response=desc)
+
         # Call to image generator
-        portrait_link = generate_image(desc)
+        # portrait_link = generate_image(desc)
         # desc = "test"
-        # portrait_link = "test"
+        portrait_link = "test"
         return Character(fullName=fullName, alternativeNames=["test"], description=desc, portraitLink=portrait_link)
 
 
