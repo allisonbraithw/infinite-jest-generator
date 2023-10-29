@@ -18,9 +18,10 @@ load_dotenv()
 
 def initialize_chroma_vectordb():
     logging.info("Hello here i am")
-    chunks, pages = load_or_open_chunks_and_pages(root_dir="./data/")
-    logging.info(f"Got {len(chunks)} chunks")
-    logging.info(f"random chunk: {chunks[53]}")
+    pages, chunks20, chunks10 = load_or_open_chunks_and_pages(
+        root_dir="./data/")
+    logging.info(f"Got {len(chunks20)} 20 sentance chunks")
+    logging.info(f"Got {len(chunks10)} 10 sentance chunks")
     try:
         initialize_collection(df.chroma_client, pages)
     except Exception:
@@ -29,10 +30,13 @@ def initialize_chroma_vectordb():
 
 
 def initialize_wv_vectordb():
-    chunks, pages = load_or_open_chunks_and_pages(root_dir="./data/")
+    pages, chunks20, chunks10 = load_or_open_chunks_and_pages(
+        root_dir="./data/")
     try:
-        configure_batches(chunks, chunk_type=ChunkType.CHUNK,
+        configure_batches(chunks20, chunk_type=ChunkType.CHUNK20,
                           purge=True, root_dir="./data/")
+        configure_batches(chunks10, chunk_type=ChunkType.CHUNK10,
+                          purge=False, root_dir="./data/")
         configure_batches(pages, chunk_type=ChunkType.PAGE,
                           purge=False, root_dir="./data/")
     except Exception as e:

@@ -12,7 +12,8 @@ import PyPDF2 as pdf
 
 class ChunkType(Enum):
     PAGE = "Page"
-    CHUNK = "Chunk"
+    CHUNK20 = "Chunk20"
+    CHUNK10 = "Chunk10"
 
 
 def split_text_with_overlap(text, num_sentences=3, overlap=1):
@@ -29,19 +30,23 @@ def split_text_with_overlap(text, num_sentences=3, overlap=1):
     return chunks
 
 
-def load_or_open_chunks_and_pages(book_name: str = "infinite-jest", root_dir: str = "../../data/"):
+def load_or_open_chunks_and_pages(book_name: str = "infinite-jest", root_dir: str = "../../data/") -> tuple[list, list, list]:
     # Open and load the PDF
     # Check if the txt file exists
     logging.info("Checking for text files")
     pdf_name = f"{root_dir}{book_name}.pdf"
     # txt_name = f"{root_dir}{book_name}.txt"
-    chunk_name = f"{root_dir}{book_name}-chunks.txt"
+    chunk_20_name = f"{root_dir}{book_name}-chunks-20.txt"
+    chunk_10_name = f"{root_dir}{book_name}-chunks-10.txt"
     page_name = f"{root_dir}{book_name}-pages.txt"
 
-    if os.path.isfile(page_name) and os.path.isfile(chunk_name):
+    if os.path.isfile(page_name) and os.path.isfile(chunk_20_name) and os.path.isfile(chunk_10_name):
         logging.info("  Text found, loading chunks and pages now")
-        with open(chunk_name, "rb") as ijc:
-            infiniteJestChunks = pickle.load(ijc)
+        with open(chunk_20_name, "rb") as ijc20:
+            infiniteJestChunks = pickle.load(ijc20)
+
+        with open(chunk_10_name, "rb") as ijc10:
+            infiniteJestChunks = pickle.load(ijc10)
 
         with open(page_name, "rb") as ijp:
             infiniteJestPages = pickle.load(ijp)
@@ -65,16 +70,23 @@ def load_or_open_chunks_and_pages(book_name: str = "infinite-jest", root_dir: st
             infiniteJestPages.append(text)
             infiniteJestString += text
 
-        infiniteJestChunks = split_text_with_overlap(infiniteJestString, 20, 3)
+        infiniteJestChunks20 = split_text_with_overlap(
+            infiniteJestString, 20, 3)
+        infiniteJestChunks10 = split_text_with_overlap(
+            infiniteJestString, 10, 3)
 
         with open("./infinite-jest-pages.txt", "wb") as ijp:
             pickle.dump(infiniteJestPages, ijp)
 
-        with open("./infinite-jest-chunks.txt", "wb") as ijc:
-            pickle.dump(infiniteJestChunks, ijc)
+        with open("./infinite-jest-chunks-20.txt", "wb") as ijc20:
+            pickle.dump(infiniteJestChunks20, ijc20)
+
+        with open("./infinite-jest-chunks-10.txt", "wb") as ijc10:
+            pickle.dump(infiniteJestChunks10, ijc10)
+
         pdfFileObj.close()
 
-    return infiniteJestPages, infiniteJestChunks
+    return infiniteJestPages, infiniteJestChunks20, infiniteJestChunks10
 
 
 def limit_docs_by_tokens(documents: list, model: str = "gpt-3.5-turbo", token_limit: int = 2000):
@@ -94,7 +106,7 @@ def limit_docs_by_tokens(documents: list, model: str = "gpt-3.5-turbo", token_li
 
 
 def load_or_generate_embeddings(
-    infiniteJestChunks: list, book_name: str = "infinite-jest", chunk_type: ChunkType = ChunkType.CHUNK, root_dir: str = "../../data/"
+    infiniteJestChunks: list, book_name: str = "infinite-jest", chunk_type: ChunkType = ChunkType.CHUNK20, root_dir: str = "../../data/"
 ):
     logging.info(f"Checking for {chunk_type.value} embeddings")
     # todo(arb) this currently does not work, using default embeddings for now
