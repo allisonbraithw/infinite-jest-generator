@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { graphql } from "../src/gql";
-import { Input, Button, Flex, Spacer, Container, Image, Form, FormControl } from "@chakra-ui/react";
+import { Input, Button, Flex, Spacer, Container, Image } from "@chakra-ui/react";
 
 import "./App.css";
 import { useLazyQuery } from "@apollo/client";
