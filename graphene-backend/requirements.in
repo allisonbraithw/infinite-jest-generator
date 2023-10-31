@@ -13,3 +13,4 @@ Flask-CORS
 google-cloud-logging
 stability-sdk
 weaviate-client
+llama-index
