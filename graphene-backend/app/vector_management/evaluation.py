@@ -17,4 +17,5 @@ def evaluate_relevancy(query: str, docs: list, response: str) -> bool:
         response=response,
         contexts=docs
     )
+    print(eval_source_result_full)
     return eval_source_result_full.passing

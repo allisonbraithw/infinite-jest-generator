@@ -1,7 +1,8 @@
 type Character {
   fullName: String!
   alternativeNames: [String]
-  description: String
+  sources: [String]!
+  description: String!
   portraitLink: String
   relevant: Boolean
 }

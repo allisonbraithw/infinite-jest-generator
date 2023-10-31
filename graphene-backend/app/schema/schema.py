@@ -13,11 +13,18 @@ from sentence_transformers import SentenceTransformer
 
 
 class Character(ObjectType):
-    fullName = String(required=True)
-    alternativeNames = List(String)
-    description = String()
-    portraitLink = String()
+    full_name = String(required=True)
+    alternative_names = List(String)
+    sources = List(String, required=True)
+    description = String(required=True)
+    portrait_link = String()
     relevant = Boolean()
+
+    def resolve_portrait_link(parent, info):
+        return generate_image(parent.description)
+
+    def resolve_relevant(parent, info):
+        return evaluate_relevancy(query=f"the physical appearance of {parent.full_name}", docs=parent.sources, response=parent.description)
 
 
 class Query(ObjectType):
@@ -36,14 +43,7 @@ class Query(ObjectType):
         desc = get_character_description_summary(
             docs=token_limited_results, character=fullName)
 
-        # Evaluate relevancy
-        relevant = evaluate_relevancy(
-            query=f"the pyhsical appearance of {fullName}", docs=token_limited_results, response=desc)
-
-        # Call to image generator
-        portrait_link = generate_image(desc)
-
-        return Character(fullName=fullName, alternativeNames=["test"], description=desc, portraitLink=portrait_link, relevant=relevant)
+        return Character(full_name=fullName, alternative_names=["test"], description=desc, sources=token_limited_results)
 
 
 def query_texts_chroma(fullName: str) -> list[str]:
