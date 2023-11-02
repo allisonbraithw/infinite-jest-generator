@@ -19,9 +19,17 @@ export type Scalars = {
 export type Character = {
   __typename?: 'Character';
   alternativeNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  description?: Maybe<Scalars['String']['output']>;
+  description: Scalars['String']['output'];
+  evaluation?: Maybe<DescriptionEval>;
   fullName: Scalars['String']['output'];
   portraitLink?: Maybe<Scalars['String']['output']>;
+  sources: Array<Maybe<Scalars['String']['output']>>;
+};
+
+export type DescriptionEval = {
+  __typename?: 'DescriptionEval';
+  explanation?: Maybe<Scalars['String']['output']>;
+  relevancy?: Maybe<Scalars['String']['output']>;
 };
 
 export type Query = {
@@ -34,12 +42,20 @@ export type QueryCharacterArgs = {
   fullName: Scalars['String']['input'];
 };
 
-export type GetCharacterQueryVariables = Exact<{
+export type GetCharacterEvaluationQueryVariables = Exact<{
   fullName: Scalars['String']['input'];
 }>;
 
 
-export type GetCharacterQuery = { __typename?: 'Query', character?: { __typename?: 'Character', fullName: string, description?: string | null, portraitLink?: string | null } | null };
+export type GetCharacterEvaluationQuery = { __typename?: 'Query', character?: { __typename?: 'Character', fullName: string, description: string, evaluation?: { __typename?: 'DescriptionEval', relevancy?: string | null, explanation?: string | null } | null } | null };
+
+export type GetCharacterPortraitQueryVariables = Exact<{
+  fullName: Scalars['String']['input'];
+}>;
 
 
-export const GetCharacterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCharacter"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fullName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"character"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"fullName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fullName"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"portraitLink"}}]}}]}}]} as unknown as DocumentNode<GetCharacterQuery, GetCharacterQueryVariables>;
+export type GetCharacterPortraitQuery = { __typename?: 'Query', character?: { __typename?: 'Character', fullName: string, description: string, portraitLink?: string | null } | null };
+
+
+export const GetCharacterEvaluationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCharacterEvaluation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fullName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"character"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"fullName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fullName"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"evaluation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"relevancy"}},{"kind":"Field","name":{"kind":"Name","value":"explanation"}}]}}]}}]}}]} as unknown as DocumentNode<GetCharacterEvaluationQuery, GetCharacterEvaluationQueryVariables>;
+export const GetCharacterPortraitDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCharacterPortrait"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fullName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"character"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"fullName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fullName"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fullName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"portraitLink"}}]}}]}}]} as unknown as DocumentNode<GetCharacterPortraitQuery, GetCharacterPortraitQueryVariables>;
