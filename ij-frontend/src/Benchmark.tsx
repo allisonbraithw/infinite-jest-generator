@@ -15,7 +15,6 @@ import {
 import { graphql } from "../src/gql";
 import { Character } from "../src/graphql.ts"
 import { useLazyQuery } from "@apollo/client";
-import { set } from "lodash";
 
 const CHARACTERS = ["Hal Incandenza", "Orin Incandenza", "Don Gately", "Joelle Van Dyne"]
 
@@ -42,7 +41,7 @@ function Benchmark() {
     })
 
     const handleSubmit = () => {
-        if (characterIndex >= CHARACTERS.length) { //test commit
+        if (characterIndex >= CHARACTERS.length) {
             return;
         }
         loadCharacterEval({ variables: { fullName: CHARACTERS[characterIndex] } });
