@@ -4,7 +4,12 @@ type Character {
   sources: [String]!
   description: String!
   portraitLink: String
-  relevant: Boolean
+  evaluation: DescriptionEval
+}
+
+type DescriptionEval {
+  relevancy: String
+  explanation: String
 }
 
 type Query {

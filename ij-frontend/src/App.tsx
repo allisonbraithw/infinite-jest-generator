@@ -1,54 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { graphql } from "../src/gql";
-import { Input, Button, Flex, Spacer, Container, Image } from "@chakra-ui/react";
+import { Link, Outlet } from "react-router-dom";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 
 import "./App.css";
-import { useLazyQuery } from "@apollo/client";
-
-// Sample Query-- the codegen does not create code that compiles if there are
-// no queries registered via the 'graphql' function
-const getCharacterQueryDocument = graphql(`
-  query GetCharacter($fullName: String!) {
-    character(fullName: $fullName) {
-      fullName
-      description
-      portraitLink
-    }
-  }
-`);
 
 function App() {
-  const [character, setCharacter] = useState("")
-  const [loadCharacter, { called, loading, data }] = useLazyQuery(getCharacterQueryDocument)
-
-  const handleSubmit = () => {
-    loadCharacter({ variables: { fullName: character } });
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleSubmit();
-    }
-  };
-
   return (
     <>
-      <Flex p={4}>
-        <Input placeholder="Hal Incandenza" value={character} onChange={(e) => setCharacter(e.target.value)} onKeyDown={handleKeyDown} />
-        <Spacer p={4} />
-        <Button onClick={handleSubmit}>Submit</Button>
-      </Flex>
-      <Flex p={4}>
-        {called && loading && <Container borderRadius="xl" border="2px solid">Loading...</Container>}
-        {data && data.character && <Container borderRadius="xl" border="2px solid">{data?.character?.description}</Container>}
-      </Flex>
-      {data && data.character &&
-        <Flex p={4}>
-          <Container>
-            <Image src={data.character.portraitLink!} alt={data?.character?.fullName} />
-          </Container>
-        </Flex>}
+      <Breadcrumb>
+        <BreadcrumbItem>
+          <BreadcrumbLink as={Link} to="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+          <BreadcrumbLink as={Link} to="/benchmarks">Benchmarks</BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
+      <Outlet />
     </>
   )
 }
