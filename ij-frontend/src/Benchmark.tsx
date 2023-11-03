@@ -42,7 +42,7 @@ function Benchmark() {
     })
 
     const handleSubmit = () => {
-        if (characterIndex >= CHARACTERS.length) {
+        if (characterIndex >= CHARACTERS.length) { //test commit
             return;
         }
         loadCharacterEval({ variables: { fullName: CHARACTERS[characterIndex] } });
