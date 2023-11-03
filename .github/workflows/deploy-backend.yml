@@ -3,7 +3,7 @@ name: Build and Deploy to Google Cloud Run
 on:
   push:
     branches:
-      - arb-gha # Set your deployment branch here
+      - main
     paths:
       - "graphene-backend/**"
 
