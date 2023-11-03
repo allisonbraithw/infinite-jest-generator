@@ -2,6 +2,7 @@ import React from "react";
 
 import {
     Button,
+    Flex,
     Table,
     Thead,
     Tbody,
@@ -14,8 +15,9 @@ import {
 import { graphql } from "../src/gql";
 import { Character } from "../src/graphql.ts"
 import { useLazyQuery } from "@apollo/client";
+import { set } from "lodash";
 
-
+const CHARACTERS = ["Hal Incandenza", "Orin Incandenza", "Don Gately", "Joelle Van Dyne"]
 
 const getCharacterEvaluationDocument = graphql(`
   query GetCharacterEvaluation($fullName: String!) {
@@ -32,6 +34,7 @@ const getCharacterEvaluationDocument = graphql(`
 
 function Benchmark() {
     const [characterEvals, setCharacterEvals] = React.useState<Character[]>([])
+    const [characterIndex, setCharacterIndex] = React.useState(0)
     const [loadCharacterEval, { loading }] = useLazyQuery(getCharacterEvaluationDocument, {
         onCompleted: (data) => {
             setCharacterEvals(characterEvals => [...characterEvals, data.character])
@@ -39,30 +42,36 @@ function Benchmark() {
     })
 
     const handleSubmit = () => {
-        loadCharacterEval({ variables: { fullName: "Hal Incandenza" } });
+        if (characterIndex >= CHARACTERS.length) {
+            return;
+        }
+        loadCharacterEval({ variables: { fullName: CHARACTERS[characterIndex] } });
+        setCharacterIndex(characterIndex + 1)
     };
 
     return (
         <>
-            <Button isLoading={loading} onClick={handleSubmit}>Generate</Button>
+            <Flex p={4} justify="right">
+                <Button isLoading={loading} onClick={handleSubmit} isDisabled={characterIndex >= CHARACTERS.length}>Generate {CHARACTERS[characterIndex]}</Button>
+            </Flex>
             <TableContainer p={4}>
-                <Table variant='simple'>
+                <Table variant='simple' layout='fixed'>
                     <TableCaption>Relevancy Assessments of Main Characters</TableCaption>
                     <Thead>
                         <Tr>
                             <Th>Character</Th>
-                            <Th>Description</Th>
+                            <Th width="35%">Description</Th>
                             <Th isNumeric>Relevancy</Th>
-                            <Th>Explanation</Th>
+                            <Th width="35%">Explanation</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
                         {characterEvals.map((characterEval) =>
-                            <Tr>
+                            <Tr key={characterEval.fullName}>
                                 <Td>{characterEval.fullName}</Td>
-                                <Td>{characterEval.description}</Td>
+                                <Td whiteSpace="normal" wordBreak="break-word">{characterEval.description}</Td>
                                 <Td isNumeric>{characterEval.evaluation.relevancy}</Td>
-                                <Td>{characterEval.evaluation.explanation}</Td>
+                                <Td whiteSpace="normal" wordBreak="break-word">{characterEval.evaluation.explanation}</Td>
                             </Tr>
                         )}
                     </Tbody>
