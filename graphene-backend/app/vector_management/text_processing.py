@@ -75,13 +75,13 @@ def load_or_open_chunks_and_pages(book_name: str = "infinite-jest", root_dir: st
         infiniteJestChunks10 = split_text_with_overlap(
             infiniteJestString, 10, 3)
 
-        with open("./infinite-jest-pages.txt", "wb") as ijp:
+        with open(f"{root_dir}/infinite-jest-pages.txt", "wb") as ijp:
             pickle.dump(infiniteJestPages, ijp)
 
-        with open("./infinite-jest-chunks-20.txt", "wb") as ijc20:
+        with open(f"{root_dir}/infinite-jest-chunks-20.txt", "wb") as ijc20:
             pickle.dump(infiniteJestChunks20, ijc20)
 
-        with open("./infinite-jest-chunks-10.txt", "wb") as ijc10:
+        with open(f"{root_dir}/infinite-jest-chunks-10.txt", "wb") as ijc10:
             pickle.dump(infiniteJestChunks10, ijc10)
 
         pdfFileObj.close()

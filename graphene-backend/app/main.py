@@ -31,7 +31,7 @@ def initialize_chroma_vectordb():
 
 def initialize_wv_vectordb():
     pages, chunks20, chunks10 = load_or_open_chunks_and_pages(
-        root_dir="../data/")
+        root_dir="./data/")
     try:
         configure_batches(chunks20, chunk_type=ChunkType.CHUNK20,
                           purge=True, root_dir="../data/")
