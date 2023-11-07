@@ -10,7 +10,11 @@ schema = {
             "vectorizer": "none",
         },
         {
-            "class": "Chunk",
+            "class": "Chunk10",
+            "vectorizer": "none",
+        },
+        {
+            "class": "Chunk20",
             "vectorizer": "none",
         }
     ]
