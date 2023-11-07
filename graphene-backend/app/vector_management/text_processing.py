@@ -43,10 +43,10 @@ def load_or_open_chunks_and_pages(book_name: str = "infinite-jest", root_dir: st
     if os.path.isfile(page_name) and os.path.isfile(chunk_20_name) and os.path.isfile(chunk_10_name):
         logging.info("  Text found, loading chunks and pages now")
         with open(chunk_20_name, "rb") as ijc20:
-            infiniteJestChunks = pickle.load(ijc20)
+            infiniteJestChunks20 = pickle.load(ijc20)
 
         with open(chunk_10_name, "rb") as ijc10:
-            infiniteJestChunks = pickle.load(ijc10)
+            infiniteJestChunks10 = pickle.load(ijc10)
 
         with open(page_name, "rb") as ijp:
             infiniteJestPages = pickle.load(ijp)

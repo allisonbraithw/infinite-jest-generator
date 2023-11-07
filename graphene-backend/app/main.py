@@ -31,14 +31,14 @@ def initialize_chroma_vectordb():
 
 def initialize_wv_vectordb():
     pages, chunks20, chunks10 = load_or_open_chunks_and_pages(
-        root_dir="./data/")
+        root_dir="../data/")
     try:
         configure_batches(chunks20, chunk_type=ChunkType.CHUNK20,
-                          purge=True, root_dir="./data/")
+                          purge=True, root_dir="../data/")
         configure_batches(chunks10, chunk_type=ChunkType.CHUNK10,
-                          purge=False, root_dir="./data/")
+                          purge=False, root_dir="../data/")
         configure_batches(pages, chunk_type=ChunkType.PAGE,
-                          purge=False, root_dir="./data/")
+                          purge=False, root_dir="../data/")
     except Exception as e:
         return f"Error configuring batches: {e}", 500
     return "OK", 200
