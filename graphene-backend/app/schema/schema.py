@@ -40,10 +40,12 @@ class Query(ObjectType):
         logging.info(f"Resolving character {fullName}")
         # Query vectordb
         result_docs = query_texts_weaviate(fullName)
+        print(result_docs)
         logging.info(f"Got {len(result_docs)} results")
         # Limit size of results
         token_limited_results = limit_docs_by_tokens(
             result_docs, model="gpt-4", token_limit=1000)
+        print(token_limited_results)
         logging.info(f"Getting description for {fullName}")
         # Call to OpenAI
         desc = get_character_description_summary(
@@ -64,12 +66,12 @@ def query_texts_weaviate(fullName: str) -> list[str]:
     model = SentenceTransformer("all-MiniLM-L6-v2")
     embeddings = model.encode(f"the pyhsical appearance of {fullName}")
     nearVector = {"vector": embeddings.tolist(), "distance": 0.65}
-    results = df.weaviate_client.query.get(ChunkType.PAGE.value, [
+    results = df.weaviate_client.query.get(ChunkType.CHUNK20.value, [
                                            "text"]).with_near_vector(nearVector).with_limit(20).do()
     logging.info(
-        f'returned {len(results["data"]["Get"][ChunkType.PAGE.value])} results')
+        f'returned {len(results["data"]["Get"][ChunkType.CHUNK20.value])} results')
     result_docs = [r["text"]
-                   for r in results["data"]["Get"][ChunkType.PAGE.value]]
+                   for r in results["data"]["Get"][ChunkType.CHUNK20.value]]
     return result_docs
 
 
